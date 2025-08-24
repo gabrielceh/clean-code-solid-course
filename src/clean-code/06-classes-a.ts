@@ -36,18 +36,4 @@
 	const userSettings = new UserSettings('src/user', 'src/user/settings', 'user@email.com', 'admin', 'Gabriel', new Date('1990-01-01'), 'M');
 
 	console.log({ userSettings });
-
-	// class Person {
-
-	//   // crear clases en typescript: Larga
-	//   public name: string;
-	//   public birthDaye: Date;
-	//   public gender: Gender;
-
-	//   constructor(name: string, birthDate: Date, gender: Gender) {
-	//   	this.name = name;
-	//   	this.birthDaye = birthDate;
-	//   	this.gender = gender;
-	//   }
-	// }
 })();

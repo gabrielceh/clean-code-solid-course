@@ -1,5 +1,7 @@
 (() => {
-	// No aplicando el principio de responsabilidad única
+	// Aplicando el principio de responsabilidad única
+	// Priorizar la composición sobre la herencia
+
 	type Gender = 'M' | 'F';
 
 	interface PersonProps {
@@ -12,6 +14,7 @@
 		public name: string;
 		public birthDate: Date;
 		public gender: Gender;
+
 		constructor({ name, birthDate, gender }: PersonProps) {
 			this.name = name;
 			this.birthDate = birthDate;
@@ -19,18 +22,17 @@
 		}
 	}
 
-	interface UserProps extends PersonProps {
+	interface UserProps {
 		email: string;
 		role: string;
 	}
 
-	class User extends Person {
+	class User {
 		private lastAccess: Date;
 		public email: string;
 		public role: string;
 
-		constructor({ birthDate, gender, email, role, name }: UserProps) {
-			super({ name, birthDate, gender });
+		constructor({ email, role }: UserProps) {
 			this.lastAccess = new Date();
 			this.email = email;
 			this.role = role;
@@ -41,19 +43,40 @@
 		}
 	}
 
-	interface UserSettingsProps extends UserProps {
+	interface SettingsProps {
 		workingDirectory: string;
 		lastOpenFolder: string;
 	}
 
-	class UserSettings extends User {
+	class Settings {
 		public workingDirectory: string;
 		public lastOpenFolder: string;
 
-		constructor({ birthDate, gender, email, role, name, workingDirectory, lastOpenFolder }: UserSettingsProps) {
-			super({ birthDate, gender, email, role, name });
+		constructor({ workingDirectory, lastOpenFolder }: SettingsProps) {
 			this.workingDirectory = workingDirectory;
 			this.lastOpenFolder = lastOpenFolder;
+		}
+	}
+
+	interface UserSettingsProps {
+		birthDate: Date;
+		email: string;
+		gender: Gender;
+		lastOpenFolder: string;
+		name: string;
+		role: string;
+		workingDirectory: string;
+	}
+
+	class UserSettings {
+		public person: Person;
+		public settings: Settings;
+		public user: User;
+
+		constructor({ birthDate, email, gender, lastOpenFolder, name, role, workingDirectory }: UserSettingsProps) {
+			this.person = new Person({ name, birthDate, gender });
+			this.settings = new Settings({ workingDirectory, lastOpenFolder });
+			this.user = new User({ email, role });
 		}
 	}
 
